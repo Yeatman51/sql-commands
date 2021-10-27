@@ -1,3 +1,4 @@
+-- querie
 -- Select all from this table
 SELECT * FROM table_name;
 
@@ -160,3 +161,85 @@ FROM movies;
 -- ORDER BY sorts the result.
 -- LIMIT specifies the maximum number of rows that the query will return.
 -- CASE creates different outputs.
+-----------------------------------------------------------
+
+-- Calculations performed on multiple rows of a table are called aggregates
+-- COUNT(): count the number of rows
+-- SUM(): the sum of the values in a column
+-- MAX()/MIN(): the largest/smallest value
+-- AVG(): the average of the values in a column
+-- ROUND(): round the values in the column
+
+SELECT COUNT(*)
+FROM table_name;
+-- COUNT() is a function that takes the name of a column as an argument and counts the number of non-empty values in that column
+
+SELECT SUM(downloads)
+FROM fake_apps;
+-- SQL makes it easy to add all values in a particular column using SUM().
+
+SELECT MAX(downloads)
+FROM fake_apps;
+
+SELECT MIN(downloads)
+FROM fake_apps;
+
+SELECT AVG(downloads)
+FROM fake_apps;
+
+SELECT name, ROUND(price, 0)
+FROM fake_apps;
+
+SELECT ROUND(AVG(price), 2)
+FROM fake_apps;
+
+-- Group By 1.
+-- GROUP BY is a clause in SQL that is used with aggregate functions. It is used in collaboration with the SELECT statement to arrange identical data into groups.
+-- The GROUP BY statement comes after any WHERE statements, but before ORDER BY or LIMIT.
+SELECT year,
+   AVG(imdb_rating)
+FROM movies
+GROUP BY year
+ORDER BY year;
+
+SELECT price, COUNT(*) 
+FROM fake_apps
+WHERE downloads > 20000
+GROUP BY price;
+
+SELECT category, SUM(downloads)
+FROM fake_apps
+GROUP BY category;
+
+-- Group By 2.
+SELECT category, 
+   price,
+   AVG(downloads)
+FROM fake_apps
+GROUP BY 1, 2;
+
+-- HAVING is very similar to WHERE. In fact, all types of WHERE clauses you learned about thus far can be used with HAVING.
+SELECT year,
+   genre,
+   COUNT(name)
+FROM movies
+GROUP BY 1, 2
+HAVING COUNT(name) > 10;
+-- HAVING statement always comes after GROUP BY, but before ORDER BY and LIMIT
+
+SELECT price, 
+   ROUND(AVG(downloads)),
+   COUNT(*)
+FROM fake_apps
+GROUP BY price
+HAVING COUNT(*) > 10;
+
+-- COUNT(): count the number of rows
+-- SUM(): the sum of the values in a column
+-- MAX()/MIN(): the largest/smallest value
+-- AVG(): the average of the values in a column
+-- ROUND(): round the values in the column
+-- GROUP BY is a clause used with aggregate functions to combine data from one or more columns.
+-- HAVING limit the results of a query based on an aggregate property.
+_____________________________________________________
+
